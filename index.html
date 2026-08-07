@@ -157,6 +157,7 @@
         .mission-group { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--panel-border); padding: 20px; margin-bottom: 16px; border-radius: var(--radius-md); }
         .mission-title { font-weight: 700; font-size: 18px; color: var(--primary); margin-bottom: 14px; }
         .mission-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); font-size: 14px; }
+        .mission-item select { background: #020617; color: var(--text-main); border: 1px solid var(--panel-border); padding: 8px 14px; border-radius: var(--radius-sm); font-size: 14px; outline: none; }
 
         details.stats-accordion { background: var(--panel-bg); border-radius: var(--radius-lg); border: 1px solid var(--panel-border); overflow: hidden; margin-top: 24px; }
         details.stats-accordion summary { background: rgba(255, 255, 255, 0.02); padding: 22px 28px; font-size: 22px; font-weight: 700; cursor: pointer; }
@@ -190,7 +191,7 @@
     <div id="plannerPage" class="page active">
         <h1>Útvonaltervező és Kódgeneráló</h1>
         <div class="room-banner">
-            <span>Munkamenet szoba (Room ID): <strong id="roomDisplay">Alapértelmezett</strong></span>
+            <span>Kebabyte:Munkamenet szoba (Room ID): <strong id="roomDisplay">fll-default-room</strong></span>
             <button class="btn" style="padding: 6px 12px; font-size: 12px;" onclick="copyRoomLink()">Link másolása a csapattársaknak</button>
         </div>
         <div class="planner-container">
@@ -280,7 +281,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // A BEKÖTÖTT FIREBASE KONFIGURÁCIÓD
         const firebaseConfig = {
             apiKey: "AIzaSyAfnT-uSO112yLgmrHwCqWlvfxZkbyblk4",
             authDomain: "futas-34cd8.firebaseapp.com",
@@ -295,7 +295,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Szoba azonosító kinyerése az URL-ből (pl. ?room=csapat1)
         const urlParams = new URLSearchParams(window.location.search);
         let roomId = urlParams.get('room');
         if (!roomId) {
@@ -309,7 +308,6 @@
             alert("A szoba linkje másolva a vágólapra! Küldd el a csapattársaknak:\n" + shareUrl);
         };
 
-        // Realtime adatbázis hallgató (Élő szinkronizáció)
         const runsRef = ref(db, 'rooms/' + roomId + '/runs');
         onValue(runsRef, (snapshot) => {
             const data = snapshot.val();
@@ -322,12 +320,10 @@
             window.updateStatsView();
         });
 
-        // Mentés a felhőbe
         window.saveRunToCloud = function(runData) {
             push(runsRef, runData);
         };
 
-        // Törlés a felhőből
         window.deleteRunFromCloud = function(dbKey) {
             const itemRef = ref(db, 'rooms/' + roomId + '/runs/' + dbKey);
             remove(itemRef);
@@ -335,7 +331,6 @@
     </script>
 
     <script>
-        // BÖNGÉSZŐS ALAPLOGIKA ÉS UI
         function showPage(pageId, btnElement) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -468,11 +463,198 @@
         feltetBtn.addEventListener('mousedown', startFeltet); feltetBtn.addEventListener('mouseup', endFeltet);
         feltetBtn.addEventListener('touchstart', startFeltet); feltetBtn.addEventListener('touchend', endFeltet);
 
-        // PONTOZÓLAP ADATOK
+        // TELJES PONTOZÓLAP ADATOK (15 KÜLDETÉS + EXTRA FELADATOK)
         const scoringData = [
-            { title: "Felszerelés ellenőrzés", items: [{ type: 'checkbox', name: 'A felszerelés befér a kis indítási területre 20 pt', points: 20 }] },
-            { title: "Pontosságjelölők", items: [{ type: 'select', name: 'Megmaradt pontosságjelölők', options: [{ text: '0 db (0 pt)', pts: 0 }, { text: '1 db (10 pt)', pts: 10 }, { text: '2 db (15 pt)', pts: 15 }, { text: '3 db (25 pt)', pts: 25 }, { text: '4 db (35 pt)', pts: 35 }, { text: '5 db (50 pt)', pts: 50 }] }] },
-            { title: "1. Drónfelmérés", items: [{ type: 'checkbox', name: 'A drón nem érinti a pályaalapot 20 pt', points: 20 }, { type: 'checkbox', name: 'Bónusz: LIDAR térkép fel van fordítva 10 pt', points: 10 }] }
+            {
+                title: "Felszerelés ellenőrzés",
+                items: [
+                    { type: 'checkbox', name: 'A felszerelés befér a kis indítási területre 20 pt', points: 20 }
+                ]
+            },
+            {
+                title: "Pontosságjelölők",
+                items: [
+                    { 
+                        type: 'select', 
+                        name: 'Megmaradt pontosságjelölők', 
+                        options: [
+                            { text: '0 db (0 pt)', pts: 0 },
+                            { text: '1 db (10 pt)', pts: 10 },
+                            { text: '2 db (15 pt)', pts: 15 },
+                            { text: '3 db (25 pt)', pts: 25 },
+                            { text: '4 db (35 pt)', pts: 35 },
+                            { text: '5 db (50 pt)', pts: 50 },
+                            { text: '6 db (50 pt)', pts: 50 }
+                        ] 
+                    }
+                ]
+            },
+            {
+                title: "1. Drónfelmérés",
+                items: [
+                    { type: 'checkbox', name: 'A drón nem érinti a pályaalapot 20 pt', points: 20 },
+                    { type: 'checkbox', name: 'Bónusz: LIDAR térkép teljesen fel van fordítva ÉS scan jelölő a területen 10 pt', points: 10 }
+                ]
+            },
+            {
+                title: "2. Magszórás",
+                items: [
+                    { 
+                        type: 'select', 
+                        name: 'Magok nem érintik a szárat', 
+                        options: [
+                            { text: '0 mag (0 pt)', pts: 0 },
+                            { text: '1 mag (10 pt)', pts: 10 },
+                            { text: '2 mag (20 pt)', pts: 20 },
+                            { text: '3 mag (30 pt)', pts: 30 }
+                        ] 
+                    }
+                ]
+            },
+            {
+                title: "3. Kőfelfordítás",
+                items: [
+                    { type: 'checkbox', name: 'A kutatási zászló lent van 20 pt', points: 20 },
+                    { type: 'checkbox', name: 'Bónusz: Kő visszafordítva az eredeti helyzetébe 10 pt', points: 10 }
+                ]
+            },
+            {
+                title: "4. Szerencsés levelek",
+                items: [
+                    { type: 'checkbox', name: '1 levél teljesen eltávolítva, nem érinti a fészket 10 pt', points: 10 },
+                    { type: 'checkbox', name: 'Bónusz: 2. levél is eltávolítva ÉS szöcske a kezdőpozícióban 20 pt', points: 20 }
+                ]
+            },
+            {
+                title: "5. Növekedő gyökerek",
+                items: [
+                    { 
+                        type: 'select', 
+                        name: 'Gyökér kiterjesztése', 
+                        options: [
+                            { text: 'Nincs kiterjesztve (0 pt)', pts: 0 },
+                            { text: 'a. Részben ki lett terjesztve (10 pt)', pts: 10 },
+                            { text: 'b. Teljesen ki lett terjesztve (20 pt)', pts: 20 }
+                        ] 
+                    }
+                ]
+            },
+            {
+                title: "6. Levélvágó őrület",
+                items: [
+                    { 
+                        type: 'select', 
+                        name: 'A hangya érinti a fészket és levélrészek a fészken belül', 
+                        options: [
+                            { text: '0 levél (0 pt)', pts: 0 },
+                            { text: '1 levél (10 pt)', pts: 10 },
+                            { text: '2 levél (20 pt)', pts: 20 },
+                            { text: '3 levél (30 pt)', pts: 30 },
+                            { text: '4 levél (40 pt)', pts: 40 }
+                        ] 
+                    }
+                ]
+            },
+            {
+                title: "7. Hatalmas gomba",
+                items: [
+                    { type: 'checkbox', name: 'Micélium teljesen ki lett terjesztve 20 pt', points: 20 },
+                    { 
+                        type: 'select', 
+                        name: 'Bónusz: Kapcsolat a gyökér és micélium között', 
+                        options: [
+                            { text: 'Nincs kapcsolat (0 pt)', pts: 0 },
+                            { text: '1 kapcsolat (10 pt)', pts: 10 },
+                            { text: '2 kapcsolat (20 pt)', pts: 20 }
+                        ] 
+                    }
+                ]
+            },
+            {
+                title: "8. Kusza inda",
+                items: [
+                    { type: 'checkbox', name: 'Az inda érinti a pályaalapot 30 pt', points: 30 }
+                ]
+            },
+            {
+                title: "9. Kutatási platform",
+                items: [
+                    { type: 'checkbox', name: 'Kutatási platform fel lett emelve 10 pt', points: 10 },
+                    { type: 'checkbox', name: 'Kameracsapda telepítve lett 10 pt', points: 10 },
+                    { type: 'checkbox', name: 'A mag nem érinti a fát 10 pt', points: 10 }
+                ]
+            },
+            {
+                title: "10. Törékeny mikroélőhelyek",
+                items: [
+                    { type: 'checkbox', name: 'Pók élőhelye a kiindulási helyzetben 10 pt', points: 10 },
+                    { type: 'checkbox', name: 'Csiga élőhelye a kiindulási helyzetben 10 pt', points: 10 }
+                ]
+            },
+            {
+                title: "11. Ablak a múltra",
+                items: [
+                    { type: 'checkbox', name: 'Gyökértakaró lent van, érinti a pályaalapot 20 pt', points: 20 }
+                ]
+            },
+            {
+                title: "12. Erdei öreg",
+                items: [
+                    { type: 'checkbox', name: 'Pálca teljesen felemelve, érinti a fát 20 pt', points: 20 },
+                    { type: 'checkbox', name: 'Támasztógyűrű a támasz körül van 10 pt', points: 10 }
+                ]
+            },
+            {
+                title: "13. Kulcsfontosságú fajok",
+                items: [
+                    { type: 'checkbox', name: 'Kulcsfontosságú fajmodell a platformon ÉS fiatal fák felemelkedtek 30 pt', points: 30 }
+                ]
+            },
+            {
+                title: "14. Megújulás magvai",
+                items: [
+                    { 
+                        type: 'select', 
+                        name: 'Magok az újraültető állomáson', 
+                        options: [
+                            { text: '0 mag (0 pt)', pts: 0 },
+                            { text: '1 mag (5 pt)', pts: 5 },
+                            { text: '2 mag (10 pt)', pts: 10 },
+                            { text: '3 mag (15 pt)', pts: 15 },
+                            { text: '4 mag (20 pt)', pts: 20 }
+                        ] 
+                    },
+                    { 
+                        type: 'select', 
+                        name: 'Bónusz: Magok érintik a pályaalapot', 
+                        options: [
+                            { text: '0 mag (0 pt)', pts: 0 },
+                            { text: '1 mag (5 pt)', pts: 5 },
+                            { text: '2 mag (10 pt)', pts: 10 },
+                            { text: '3 mag (15 pt)', pts: 15 },
+                            { text: '4 mag (20 pt)', pts: 20 }
+                        ] 
+                    }
+                ]
+            },
+            {
+                title: "15. Biobarát építészet & Környezeti bónusz",
+                items: [
+                    { type: 'checkbox', name: 'Lombkorona fészek fel lett emelve 10 pt', points: 10 },
+                    { type: 'checkbox', name: 'Tetőablak teljesen be lett tolva 10 pt', points: 10 },
+                    { type: 'checkbox', name: 'Komposztnyílás teljesen nyitva, érinti a pályaalapot 10 pt', points: 10 },
+                    { 
+                        type: 'select', 
+                        name: 'Környezeti bónusz (Legfontosabb ökológiai igény) 10 pt', 
+                        options: [
+                            { text: 'Nincs bónusz (0 pt)', pts: 0 },
+                            { text: 'a. Bányadokkoló: Lombkorona fészek (10 pt)', pts: 10 },
+                            { text: 'b. Városi dokkoló: Tetőablak (10 pt)', pts: 10 },
+                            { text: 'c. Farm dokkoló: Komposztnyílás (10 pt)', pts: 10 }
+                        ] 
+                    }
+                ]
+            }
         ];
 
         function getGroupMaxPoints(group) {
@@ -564,6 +746,12 @@
         };
 
         window.updateStatsView = function() {
+            updateRunsList();
+            updateTasksStats();
+            updateFeltetStats();
+        };
+
+        function updateRunsList() {
             const container = document.getElementById('statsListContainer');
             if (!window.statistics || window.statistics.length === 0) {
                 container.innerHTML = '<p style="color: var(--text-muted);">Még nincs mentett menet az adatbázisban.</p>';
@@ -597,7 +785,100 @@
                 `;
                 container.appendChild(card);
             });
-        };
+        }
+
+        function updateTasksStats() {
+            const container = document.getElementById('tasksStatsContainer');
+            if (!window.statistics || window.statistics.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs elegendő adat a feladatsztatisztikához.</p>';
+                return;
+            }
+
+            const totalRuns = window.statistics.length;
+            const taskStats = scoringData.map((group, gIdx) => {
+                let totalEarnedPoints = 0;
+                let maxPoints = getGroupMaxPoints(group);
+
+                window.statistics.forEach(run => {
+                    const runMission = run.missions[gIdx];
+                    if (runMission) totalEarnedPoints += runMission.earned;
+                });
+
+                const totalPossiblePoints = maxPoints * totalRuns;
+                const solvePercentage = totalPossiblePoints > 0 ? Math.round((totalEarnedPoints / totalPossiblePoints) * 100) : 0;
+                const avgPoints = (totalEarnedPoints / totalRuns).toFixed(1);
+
+                return { title: group.title, percentage: solvePercentage, avgPoints, maxPoints };
+            });
+
+            let html = `<p style="margin-bottom: 24px; color: var(--text-muted);">Összes mentett menet alapján (${totalRuns} menet pontaránya):</p><div class="stats-grid">`;
+            taskStats.forEach(stat => {
+                let statusColor = stat.percentage >= 70 ? 'var(--success)' : (stat.percentage >= 50 ? 'var(--warning)' : 'var(--accent)');
+                html += `
+                    <div class="stat-card" style="border-left-color: ${statusColor};">
+                        <h4>${stat.title}</h4>
+                        <div style="font-size: 26px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: ${statusColor};">${stat.percentage}% sikeresség</div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${stat.percentage}%; background: ${statusColor};"></div></div>
+                        <div style="font-size: 13px; color: var(--text-muted);">Átlagos pont: ${stat.avgPoints} / ${stat.maxPoints} pt</div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function updateFeltetStats() {
+            const container = document.getElementById('feltetStatsContainer');
+            if (!window.statistics || window.statistics.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs rögzített feltétcsere adat.</p>';
+                return;
+            }
+
+            const feltetByPosition = {};
+            let allFeltetTimes = [];
+
+            window.statistics.forEach(run => {
+                if (run.feltetTimes) {
+                    run.feltetTimes.forEach((time, idx) => {
+                        const pos = idx + 1;
+                        if (!feltetByPosition[pos]) feltetByPosition[pos] = [];
+                        feltetByPosition[pos].push(time);
+                        allFeltetTimes.push(time);
+                    });
+                }
+            });
+
+            if (allFeltetTimes.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">Egyetlen menetben sem történt feltétcsere mérés.</p>';
+                return;
+            }
+
+            const grandAvg = (allFeltetTimes.reduce((a, b) => a + b, 0) / allFeltetTimes.length).toFixed(1);
+            let html = `
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 28px;">
+                    <div style="background: var(--card-bg); padding: 20px 28px; border-radius: var(--radius-md); border-left: 5px solid var(--primary); border: 1px solid var(--panel-border);">
+                        <div style="font-size: 13px; color: var(--text-muted);">Összes csere átlagideje</div>
+                        <div style="font-size: 32px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--primary);">${grandAvg} mp</div>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 18px;">Cserék átlagos ideje</h3>
+                <div class="stats-grid">
+            `;
+
+            Object.keys(feltetByPosition).forEach(pos => {
+                const times = feltetByPosition[pos];
+                const avg = (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1);
+                html += `
+                    <div class="stat-card">
+                        <h4>${pos}. Feltétcsere</h4>
+                        <div style="font-size: 28px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--primary);">${avg} mp</div>
+                        <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Mért értékek: ${times.map(t => t + 's').join(', ')}</div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
     </script>
 </body>
 </html>
