@@ -11,7 +11,6 @@
             --primary-glow: rgba(0, 242, 254, 0.5);
             --primary-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
             --secondary: #7928ca;
-            --secondary-gradient: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
             --bg-color: #020617;
             --panel-bg: rgba(15, 23, 42, 0.7);
             --panel-border: rgba(255, 255, 255, 0.15);
@@ -30,10 +29,7 @@
             --shadow-glow: 0 0 50px rgba(0, 242, 254, 0.18);
         }
 
-        * {
-            box-sizing: border-box;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        * { box-sizing: border-box; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
 
         body {
             margin: 0;
@@ -50,7 +46,6 @@
             overflow-x: hidden;
         }
 
-        /* Navigáció */
         nav {
             background: rgba(2, 6, 23, 0.8);
             backdrop-filter: blur(20px);
@@ -73,13 +68,6 @@
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            letter-spacing: 0.5px;
-        }
-
-        nav button:hover {
-            color: var(--text-main);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
         }
 
         nav button.active {
@@ -87,16 +75,14 @@
             color: #020617;
             font-weight: 800;
             box-shadow: 0 0 30px var(--primary-glow);
-            border-color: transparent;
         }
 
-        /* Oldalak */
         .page {
             display: none;
             padding: 40px 24px;
             max-width: 1440px;
             margin: 0 auto;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideUp 0.4s ease;
         }
 
         @keyframes slideUp {
@@ -104,9 +90,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .page.active {
-            display: block;
-        }
+        .page.active { display: block; }
 
         h1 {
             font-family: 'Space Grotesk', sans-serif;
@@ -116,18 +100,20 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 0 0 32px 0;
-            letter-spacing: -1px;
-            text-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
         }
 
-        h2, h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
+        .room-banner {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--primary);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Gombok */
         .btn {
             background: var(--primary-gradient);
             color: #020617;
@@ -139,464 +125,57 @@
             font-size: 15px;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            letter-spacing: 0.3px;
         }
 
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 30px var(--primary-glow);
-        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--primary-glow); }
+        .btn-danger { background: var(--accent-gradient); color: white; }
+        .btn-success { background: var(--success-gradient); color: white; }
 
-        .btn:active {
-            transform: translateY(0) scale(0.98);
-        }
+        .planner-container { display: flex; gap: 28px; flex-wrap: wrap; }
+        .map-section { flex: 3; background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 24px; border-radius: var(--radius-lg); min-width: 600px; }
+        .file-upload-box { margin-bottom: 20px; background: rgba(2, 6, 23, 0.6); padding: 16px; border-radius: var(--radius-md); border: 1px dashed rgba(255, 255, 255, 0.2); }
+        canvas { border: 1px solid var(--panel-border); border-radius: var(--radius-md); width: 100%; background: #020617; }
 
-        .btn-danger { 
-            background: var(--accent-gradient); 
-            color: white; 
-        }
-        .btn-danger:hover { 
-            box-shadow: 0 8px 30px rgba(255, 0, 85, 0.5); 
-        }
+        .code-section { flex: 1; display: flex; flex-direction: column; gap: 20px; min-width: 320px; }
+        textarea { width: 100%; height: 420px; background: rgba(2, 6, 23, 0.85); color: var(--primary); border: 1px solid var(--panel-border); border-radius: var(--radius-md); padding: 18px; font-family: 'JetBrains Mono', monospace; }
 
-        .btn-success { 
-            background: var(--success-gradient); 
-            color: white; 
-        }
-        .btn-success:hover { 
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.5); 
-        }
+        .timer-container { text-align: center; }
+        .timer-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: var(--radius-lg); padding: 50px 30px; max-width: 750px; margin: 0 auto 36px; }
+        .time-display { font-size: 120px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--primary); }
 
-        /* Térkép / Útvonaltervező */
-        .planner-container {
-            display: flex;
-            gap: 28px;
-            flex-wrap: wrap;
-        }
+        .feltet-box { background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 36px; border-radius: var(--radius-lg); max-width: 520px; margin: 0 auto; }
+        .feltet-btn { background: var(--accent-gradient); color: white; border: none; width: 180px; height: 180px; border-radius: 50%; font-size: 24px; font-weight: 800; cursor: pointer; margin: 20px auto 0; display: flex; align-items: center; justify-content: center; }
+        
+        #feltetList { list-style: none; padding: 0; margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        #feltetList li { background: rgba(255, 255, 255, 0.06); padding: 8px 16px; border-radius: 30px; font-family: 'JetBrains Mono', monospace; color: var(--primary); }
 
-        .map-section {
-            flex: 3;
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--panel-border);
-            padding: 24px;
-            border-radius: var(--radius-lg);
-            min-width: 600px;
-            box-shadow: var(--shadow-glow);
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.88); backdrop-filter: blur(16px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #090d16; border: 1px solid var(--panel-border); padding: 36px; border-radius: var(--radius-lg); width: 92%; max-width: 850px; max-height: 85vh; overflow-y: auto; }
+        .score-corner { position: sticky; top: 0; float: right; background: var(--success-gradient); color: white; padding: 12px 24px; border-radius: var(--radius-md); font-size: 24px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
 
-        .file-upload-box {
-            margin-bottom: 20px;
-            background: rgba(2, 6, 23, 0.6);
-            padding: 16px 20px;
-            border-radius: var(--radius-md);
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+        .mission-group { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--panel-border); padding: 20px; margin-bottom: 16px; border-radius: var(--radius-md); }
+        .mission-title { font-weight: 700; font-size: 18px; color: var(--primary); margin-bottom: 14px; }
+        .mission-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); font-size: 14px; }
 
-        canvas {
-            border: 1px solid var(--panel-border);
-            border-radius: var(--radius-md);
-            cursor: crosshair;
-            width: 100%;
-            height: auto;
-            background-color: #020617;
-            display: block;
-            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
-        }
+        details.stats-accordion { background: var(--panel-bg); border-radius: var(--radius-lg); border: 1px solid var(--panel-border); overflow: hidden; margin-top: 24px; }
+        details.stats-accordion summary { background: rgba(255, 255, 255, 0.02); padding: 22px 28px; font-size: 22px; font-weight: 700; cursor: pointer; }
+        .stats-accordion-container { padding: 28px; }
 
-        .code-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 320px;
-        }
+        .run-card { background: var(--card-bg); border-radius: var(--radius-lg); border: 1px solid var(--panel-border); padding: 28px; margin-bottom: 24px; }
+        .run-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 16px; margin-bottom: 20px; }
+        .run-score-badge { background: var(--success-gradient); color: white; padding: 8px 22px; border-radius: 30px; font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 800; }
+        .run-time-info { font-size: 15px; background: rgba(2, 6, 23, 0.6); border: 1px solid var(--panel-border); padding: 14px 20px; border-radius: var(--radius-md); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
 
-        textarea {
-            width: 100%;
-            height: 420px;
-            background: rgba(2, 6, 23, 0.85);
-            color: var(--primary);
-            border: 1px solid var(--panel-border);
-            border-radius: var(--radius-md);
-            padding: 18px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-            resize: vertical;
-            outline: none;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
+        .run-missions-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; background: rgba(2, 6, 23, 0.5); padding: 18px; border-radius: var(--radius-md); margin-bottom: 20px; }
+        .run-mission-item { font-size: 13px; display: flex; justify-content: space-between; background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent); }
+        .run-mission-item.has-points { border-left-color: var(--primary); }
+        .run-mission-item.max-points { background: rgba(16, 185, 129, 0.15) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; border-left: 4px solid var(--success) !important; }
 
-        textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 25px var(--primary-glow);
-        }
-
-        /* Stopper és Futás */
-        .timer-container {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .timer-card {
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--panel-border);
-            border-radius: var(--radius-lg);
-            padding: 50px 30px;
-            max-width: 750px;
-            margin: 0 auto 36px auto;
-            box-shadow: var(--shadow-glow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .timer-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--primary-gradient);
-        }
-
-        .time-display {
-            font-size: 120px;
-            font-weight: 800;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--primary);
-            text-shadow: 0 0 50px var(--primary-glow);
-            margin-bottom: 28px;
-            letter-spacing: -4px;
-        }
-
-        .run-controls {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .feltet-box {
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--panel-border);
-            padding: 36px;
-            border-radius: var(--radius-lg);
-            max-width: 520px;
-            margin: 0 auto;
-            box-shadow: var(--shadow-glow);
-        }
-
-        .feltet-btn {
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            font-size: 26px;
-            font-weight: 800;
-            font-family: 'Space Grotesk', sans-serif;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            box-shadow: 0 10px 40px rgba(255, 0, 85, 0.4);
-            user-select: none;
-            margin: 20px auto 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feltet-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 50px rgba(255, 0, 85, 0.6);
-        }
-
-        .feltet-btn:active {
-            transform: scale(0.92);
-            box-shadow: 0 5px 20px rgba(255, 0, 85, 0.8);
-        }
-
-        #feltetList {
-            list-style: none;
-            padding: 0;
-            margin-top: 24px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        #feltetList li {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* Pontozólap (Modal) */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.88);
-            backdrop-filter: blur(16px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            animation: fadeIn 0.25s ease;
-        }
-
-        .modal-content {
-            background: #090d16;
-            border: 1px solid var(--panel-border);
-            padding: 36px;
-            border-radius: var(--radius-lg);
-            width: 92%;
-            max-width: 850px;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
-        }
-
-        .score-corner {
-            position: sticky;
-            top: 0;
-            float: right;
-            background: var(--success-gradient);
-            color: white;
-            padding: 12px 24px;
-            border-radius: var(--radius-md);
-            font-size: 24px;
-            font-weight: 800;
-            font-family: 'JetBrains Mono', monospace;
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-            z-index: 10;
-        }
-
-        .mission-group {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--panel-border);
-            padding: 20px;
-            margin-bottom: 16px;
-            border-radius: var(--radius-md);
-        }
-
-        .mission-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--primary);
-            margin-bottom: 14px;
-        }
-
-        .mission-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 14px;
-        }
-
-        .mission-item:last-child {
-            border-bottom: none;
-        }
-
-        .mission-item input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-
-        .mission-item select {
-            background: #020617;
-            color: var(--text-main);
-            border: 1px solid var(--panel-border);
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            outline: none;
-        }
-
-        /* STATISZTIKÁK & LEHAJTHATÓ MENÜK */
-        details.stats-accordion {
-            background: var(--panel-bg);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--panel-border);
-            overflow: hidden;
-            margin-top: 24px;
-            box-shadow: var(--shadow-glow);
-        }
-
-        details.stats-accordion summary {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 22px 28px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-main);
-            cursor: pointer;
-            user-select: none;
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        details.stats-accordion summary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--primary);
-        }
-
-        .stats-accordion-container {
-            padding: 28px;
-        }
-
-        .run-card {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--panel-border);
-            padding: 28px;
-            margin-bottom: 24px;
-        }
-
-        .run-card:hover {
-            background: var(--card-hover);
-            border-color: rgba(0, 242, 254, 0.4);
-        }
-
-        .run-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 16px;
-            margin-bottom: 20px;
-        }
-
-        .run-score-badge {
-            background: var(--success-gradient);
-            color: white;
-            padding: 8px 22px;
-            border-radius: 30px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
-            font-weight: 800;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .run-time-info {
-            font-size: 15px;
-            background: rgba(2, 6, 23, 0.6);
-            border: 1px solid var(--panel-border);
-            padding: 14px 20px;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .run-missions-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 12px;
-            background: rgba(2, 6, 23, 0.5);
-            padding: 18px;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-        }
-
-        .run-mission-item {
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            border-left: 4px solid var(--accent);
-        }
-
-        .run-mission-item.has-points {
-            border-left-color: var(--primary);
-        }
-
-        .run-mission-item.max-points {
-            background: rgba(16, 185, 129, 0.15) !important;
-            border: 1px solid rgba(16, 185, 129, 0.3) !important;
-            border-left: 4px solid var(--success) !important;
-            color: #ffffff;
-        }
-
-        .run-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 18px;
-            margin-top: 10px;
-        }
-
-        /* Statisztikai rács */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--panel-border);
-            border-left: 5px solid var(--primary);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            background: var(--card-hover);
-        }
-
-        .stat-card h4 {
-            margin: 0 0 10px 0;
-            color: var(--text-muted);
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .progress-bar-bg {
-            background: rgba(2, 6, 23, 0.8);
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 14px 0;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            border-radius: 5px;
-            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .stat-card { background: var(--card-bg); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--panel-border); border-left: 5px solid var(--primary); }
+        .progress-bar-bg { background: rgba(2, 6, 23, 0.8); height: 10px; border-radius: 5px; overflow: hidden; margin: 14px 0; }
+        .progress-bar-fill { height: 100%; width: 0%; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -610,19 +189,20 @@
     <!-- 1. OLDAL: ÚTVONALTERVEZŐ -->
     <div id="plannerPage" class="page active">
         <h1>Útvonaltervező és Kódgeneráló</h1>
+        <div class="room-banner">
+            <span>Munkamenet szoba (Room ID): <strong id="roomDisplay">Alapértelmezett</strong></span>
+            <button class="btn" style="padding: 6px 12px; font-size: 12px;" onclick="copyRoomLink()">Link másolása a csapattársaknak</button>
+        </div>
         <div class="planner-container">
             <div class="map-section">
                 <div class="file-upload-box">
                     <label for="imageLoader" class="btn">Pályakép betöltése gépemről</label>
                     <input type="file" id="imageLoader" accept="image/*" style="display: none;">
-                    <span id="fileNameDisplay" style="color: var(--text-muted); font-size: 14px;">Válaszd ki a pályaképet (2213 × 1013 px felbontás)</span>
+                    <span id="fileNameDisplay" style="color: var(--text-muted); font-size: 14px; margin-left: 10px;">Válaszd ki a pályaképet (2213 × 1013 px felbontás)</span>
                 </div>
-                
                 <canvas id="mapCanvas" width="2213" height="1013"></canvas>
                 <br>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-danger" onclick="clearMap()">Összes törlése</button>
-                </div>
+                <button class="btn btn-danger" onclick="clearMap()">Összes törlése</button>
             </div>
             
             <div class="code-section">
@@ -639,17 +219,17 @@
         <div class="timer-container">
             <div class="timer-card">
                 <div class="time-display" id="timeDisplay">02:30</div>
-                <div class="run-controls">
+                <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
                     <button class="btn btn-success" id="startTimerBtn" onclick="startTimer()">Indítás</button>
                     <button class="btn" onclick="pauseTimer()">Vége</button>
                     <button class="btn btn-danger" onclick="resetTimer()">Visszaállítás</button>
-                    <button class="btn" style="background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--panel-border);" onclick="openScoringModal()">Pontozólap megnyitása</button>
+                    <button class="btn" style="background: rgba(255,255,255,0.08); color: var(--text-main);" onclick="openScoringModal()">Pontozólap megnyitása</button>
                 </div>
             </div>
 
             <div class="feltet-box">
-                <h3 style="margin-top: 0; font-size: 22px;">Feltétcsere mérése</h3>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">Tartsd lenyomva a gombot, amíg cserélitek a feltétet!</p>
+                <h3 style="margin-top: 0;">Feltétcsere mérése</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Tartsd lenyomva a gombot, amíg cserélitek a feltétet!</p>
                 <button class="feltet-btn" id="feltetBtn">CSERE</button>
                 <ul id="feltetList"></ul>
             </div>
@@ -660,30 +240,26 @@
     <div class="modal-overlay" id="scoringModal">
         <div class="modal-content">
             <div class="score-corner" id="totalScoreDisplay">0 pont</div>
-            <h2 style="margin-top: 0; font-size: 26px;">Bioglow Founders Edition - Pontozólap</h2>
-            
+            <h2 style="margin-top: 0;">Bioglow Founders Edition - Pontozólap</h2>
             <div id="missionsContainer"></div>
-
-            <div style="margin-top: 28px; text-align: right; clear: both; display: flex; justify-content: flex-end; gap: 14px;">
+            <div style="margin-top: 28px; text-align: right; display: flex; justify-content: flex-end; gap: 14px;">
                 <button class="btn btn-danger" onclick="closeScoringModal()">Mégse</button>
-                <button class="btn btn-success" onclick="saveRunAndShowStats()">Menet Mentése</button>
+                <button class="btn btn-success" onclick="saveRunAndShowStats()">Menet Mentése Cloudba</button>
             </div>
         </div>
     </div>
 
     <!-- 4. OLDAL: STATISZTIKA -->
     <div id="statsPage" class="page">
-        <h1>Mentett Futások Statisztikái</h1>
+        <h1>Mentett Futások Statisztikái (Élő Szinkron)</h1>
         
-        <!-- MENETEK LEHAJTHATÓ MENÜ -->
         <details class="stats-accordion" open>
             <summary>Menetek</summary>
             <div class="stats-accordion-container" id="statsListContainer">
-                <p style="color: var(--text-muted);">Még nincs mentett menet. Indíts egy mérést a "Stopper és Futás" oldalon!</p>
+                <p style="color: var(--text-muted);">Még nincs mentett menet az adatbázisban.</p>
             </div>
         </details>
 
-        <!-- FELADATOK MEGOLDÁSA LEHAJTHATÓ MENÜ -->
         <details class="stats-accordion">
             <summary>Feladatok megoldása</summary>
             <div class="stats-accordion-container" id="tasksStatsContainer">
@@ -691,7 +267,6 @@
             </div>
         </details>
 
-        <!-- FELTÉTCSERÉK LEHAJTHATÓ MENÜ -->
         <details class="stats-accordion">
             <summary>Feltétcserék</summary>
             <div class="stats-accordion-container" id="feltetStatsContainer">
@@ -700,11 +275,70 @@
         </details>
     </div>
 
+    <!-- FIREBASE SDK INICIALIZÁLÁS -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // A BEKÖTÖTT FIREBASE KONFIGURÁCIÓD
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfnT-uSO112yLgmrHwCqWlvfxZkbyblk4",
+            authDomain: "futas-34cd8.firebaseapp.com",
+            databaseURL: "https://futas-34cd8-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "futas-34cd8",
+            storageBucket: "futas-34cd8.firebasestorage.app",
+            messagingSenderId: "375963903161",
+            appId: "1:375963903161:web:0778fbcd6da60272972768",
+            measurementId: "G-1FJW2X4GN0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Szoba azonosító kinyerése az URL-ből (pl. ?room=csapat1)
+        const urlParams = new URLSearchParams(window.location.search);
+        let roomId = urlParams.get('room');
+        if (!roomId) {
+            roomId = "fll-default-room";
+        }
+        document.getElementById('roomDisplay').innerText = roomId;
+
+        window.copyRoomLink = function() {
+            const shareUrl = window.location.origin + window.location.pathname + '?room=' + roomId;
+            navigator.clipboard.writeText(shareUrl);
+            alert("A szoba linkje másolva a vágólapra! Küldd el a csapattársaknak:\n" + shareUrl);
+        };
+
+        // Realtime adatbázis hallgató (Élő szinkronizáció)
+        const runsRef = ref(db, 'rooms/' + roomId + '/runs');
+        onValue(runsRef, (snapshot) => {
+            const data = snapshot.val();
+            window.statistics = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    window.statistics.push({ dbKey: key, ...data[key] });
+                });
+            }
+            window.updateStatsView();
+        });
+
+        // Mentés a felhőbe
+        window.saveRunToCloud = function(runData) {
+            push(runsRef, runData);
+        };
+
+        // Törlés a felhőből
+        window.deleteRunFromCloud = function(dbKey) {
+            const itemRef = ref(db, 'rooms/' + roomId + '/runs/' + dbKey);
+            remove(itemRef);
+        };
+    </script>
+
     <script>
+        // BÖNGÉSZŐS ALAPLOGIKA ÉS UI
         function showPage(pageId, btnElement) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
             if(btnElement) btnElement.classList.add('active');
         }
@@ -714,15 +348,8 @@
         const codeInput = document.getElementById('codeInput');
         const imageLoader = document.getElementById('imageLoader');
         
-        let bgImage = null;
-        let paths = []; 
-        let currentPathIndex = -1;
-        let currentAngle = 0;
-        let isRunActive = false;
-        
-        const SCALE_MM_PER_PX = 2362 / 2213; 
-        const OFFSET_X_MM = 237;
-
+        let bgImage = null, paths = [], currentPathIndex = -1, currentAngle = 0, isRunActive = false;
+        const SCALE_MM_PER_PX = 2362 / 2213, OFFSET_X_MM = 237;
         const COLOR_PALETTE = ['#00f2fe', '#ffa502', '#ff0055', '#10b981', '#7928ca', '#ff7979', '#ffffff'];
 
         imageLoader.addEventListener('change', function(e) {
@@ -731,484 +358,169 @@
                 const img = new Image();
                 img.onload = function() {
                     bgImage = img;
-                    document.getElementById('fileNameDisplay').innerText = "Kép sikeresen betöltve! (2213 × 1013)";
+                    document.getElementById('fileNameDisplay').innerText = "Kép betöltve!";
                     document.getElementById('fileNameDisplay').style.color = "var(--success)";
                     drawPath();
                 }
                 img.src = event.target.result;
             }
-            if(e.target.files[0]) {
-                reader.readAsDataURL(e.target.files[0]);
-            }
+            if(e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
         });
 
         function startNewPath() {
-            let inputCoords = prompt("Add meg a kezdőpont X és Y koordinátáit (mm-ben), vesszővel elválasztva(0,0 a pálya bal alsó sarka, 1885,0 a pálya jobb alsó sarka):", "0, 0");
-            
+            let inputCoords = prompt("Kezdőpont X és Y (mm, vesszővel elválasztva):", "0, 0");
             if (inputCoords === null) return;
-
             let parts = inputCoords.split(",");
-            let startX_mm = parseFloat(parts[0]) || 0;
-            let startY_mm = parseFloat(parts[1]) || 0;
-
+            let startX_mm = parseFloat(parts[0]) || 0, startY_mm = parseFloat(parts[1]) || 0;
             let x_px = (startX_mm + OFFSET_X_MM) / SCALE_MM_PER_PX;
             let y_px = canvas.height - (startY_mm / SCALE_MM_PER_PX);
 
             isRunActive = true;
             let runNum = paths.length + 1;
-            
-            if (codeInput.value.trim() !== "") {
-                codeInput.value += `\n--- ${runNum}. MENET ---\n`;
-            } else {
-                codeInput.value = `--- ${runNum}. MENET ---\n`;
-            }
-            codeInput.value += `// Kezdőpont rögzítve: X=${startX_mm}mm, Y=${startY_mm}mm\n`;
+            codeInput.value += (codeInput.value.trim() ? "\n" : "") + `--- ${runNum}. MENET ---\n// Kezdőpont: X=${startX_mm}mm, Y=${startY_mm}mm\n`;
 
-            const newColor = COLOR_PALETTE[paths.length % COLOR_PALETTE.length];
-            paths.push({ points: [{x: x_px, y: y_px}], color: newColor });
+            paths.push({ points: [{x: x_px, y: y_px}], color: COLOR_PALETTE[paths.length % COLOR_PALETTE.length] });
             currentPathIndex = paths.length - 1;
             currentAngle = 0;
-
             drawPath();
         }
 
         canvas.addEventListener('click', (e) => {
-            if (!isRunActive || currentPathIndex === -1) {
-                return;
-            }
-
+            if (!isRunActive || currentPathIndex === -1) return;
             const rect = canvas.getBoundingClientRect();
             const x = (e.clientX - rect.left) * (canvas.width / rect.width);
             const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-
-            const currentPoints = paths[currentPathIndex].points;
-            const lastPt = currentPoints[currentPoints.length - 1];
+            const lastPt = paths[currentPathIndex].points[paths[currentPathIndex].points.length - 1];
             
-            const dx = x - lastPt.x;
-            const dy = y - lastPt.y;
-            
-            const distancePx = Math.sqrt(dx*dx + dy*dy);
-            const distanceMm = Math.round(distancePx * SCALE_MM_PER_PX);
-            
+            const dx = x - lastPt.x, dy = y - lastPt.y;
+            const distanceMm = Math.round(Math.sqrt(dx*dx + dy*dy) * SCALE_MM_PER_PX);
             let targetAngle = Math.atan2(-dy, dx) * (180 / Math.PI);
             let turnAngle = Math.round(targetAngle - currentAngle);
-            
             while (turnAngle > 180) turnAngle -= 360;
             while (turnAngle < -180) turnAngle += 360;
 
-            if (turnAngle !== 0) {
-                let sign = turnAngle > 0 ? "+" : "";
-                codeInput.value += `Kanyar: ${sign}${turnAngle}\n`;
-            }
-
-            if (distanceMm !== 0) {
-                codeInput.value += `Egyenes: +${distanceMm}\n`;
-            }
+            if (turnAngle !== 0) codeInput.value += `Kanyar: ${turnAngle > 0 ? "+" : ""}${turnAngle}\n`;
+            if (distanceMm !== 0) codeInput.value += `Egyenes: +${distanceMm}\n`;
 
             currentAngle = targetAngle;
-            currentPoints.push({x, y});
+            paths[currentPathIndex].points.push({x, y});
             drawPath();
         });
 
         function drawPath() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            if (bgImage) {
-                ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-            } else {
-                ctx.fillStyle = "#020617";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "var(--text-muted)";
-                ctx.font = "bold 32px 'Space Grotesk', sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText("Kattints a 'Pályakép betöltése gépemről' gombra a kép megjelenítéséhez!", canvas.width / 2, canvas.height / 2);
+            if (bgImage) ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+            else {
+                ctx.fillStyle = "#020617"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "var(--text-muted)"; ctx.font = "bold 28px sans-serif"; ctx.textAlign = "center";
+                ctx.fillText("Betöltött pályakép itt fog megjelenni", canvas.width / 2, canvas.height / 2);
             }
-
             paths.forEach((pathObj) => {
                 const pts = pathObj.points;
-                if (pts.length === 0) return;
-
-                ctx.beginPath();
-                ctx.moveTo(pts[0].x, pts[0].y);
-                for (let i = 1; i < pts.length; i++) {
-                    ctx.lineTo(pts[i].x, pts[i].y);
-                }
-                ctx.strokeStyle = pathObj.color;
-                ctx.lineWidth = 5;
-                ctx.stroke();
-
-                pts.forEach((p, pIndex) => {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, 8, 0, 2 * Math.PI);
-                    ctx.fillStyle = pIndex === 0 ? '#ffffff' : pathObj.color;
-                    ctx.fill();
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = '#020617';
-                    ctx.stroke();
+                if (!pts.length) return;
+                ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+                for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+                ctx.strokeStyle = pathObj.color; ctx.lineWidth = 5; ctx.stroke();
+                pts.forEach((p, idx) => {
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 8, 0, 2 * Math.PI);
+                    ctx.fillStyle = idx === 0 ? '#ffffff' : pathObj.color; ctx.fill();
                 });
             });
         }
 
-        function clearMap() {
-            paths = [];
-            currentPathIndex = -1;
-            currentAngle = 0;
-            isRunActive = false;
-            codeInput.value = "";
-            drawPath();
-        }
-
+        function clearMap() { paths = []; currentPathIndex = -1; isRunActive = false; codeInput.value = ""; drawPath(); }
         drawPath();
 
-        let timerInterval;
-        let timeLeft = 150;
-        let isRunning = false;
-        let currentRunFeltetTimes = [];
-        let feltetStartTime = 0;
+        // STOPPER
+        let timerInterval, timeLeft = 150, isRunning = false, currentRunFeltetTimes = [], feltetStartTime = 0;
         const timeDisplay = document.getElementById('timeDisplay');
 
         function updateTimeDisplay() {
             if (timeLeft >= 0) {
-                const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-                const s = (timeLeft % 60).toString().padStart(2, '0');
-                timeDisplay.innerText = `${m}:${s}`;
-                timeDisplay.style.color = "var(--primary)";
+                const m = Math.floor(timeLeft / 60).toString().padStart(2, '0'), s = (timeLeft % 60).toString().padStart(2, '0');
+                timeDisplay.innerText = `${m}:${s}`; timeDisplay.style.color = "var(--primary)";
             } else {
                 const overTime = Math.abs(timeLeft);
-                const m = Math.floor(overTime / 60).toString().padStart(2, '0');
-                const s = (overTime % 60).toString().padStart(2, '0');
-                timeDisplay.innerText = `+${m}:${s}`;
-                timeDisplay.style.color = "var(--accent)";
+                const m = Math.floor(overTime / 60).toString().padStart(2, '0'), s = (overTime % 60).toString().padStart(2, '0');
+                timeDisplay.innerText = `+${m}:${s}`; timeDisplay.style.color = "var(--accent)";
             }
         }
 
         function startTimer() {
-            if (isRunning) return;
-            isRunning = true;
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimeDisplay();
-            }, 1000);
+            if (isRunning) return; isRunning = true;
+            timerInterval = setInterval(() => { timeLeft--; updateTimeDisplay(); }, 1000);
         }
-
-        function pauseTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-        }
-
-        function resetTimer() {
-            pauseTimer();
-            timeLeft = 150;
-            updateTimeDisplay();
-            currentRunFeltetTimes = [];
-            document.getElementById('feltetList').innerHTML = "";
-        }
+        function pauseTimer() { clearInterval(timerInterval); isRunning = false; }
+        function resetTimer() { pauseTimer(); timeLeft = 150; updateTimeDisplay(); currentRunFeltetTimes = []; document.getElementById('feltetList').innerHTML = ""; }
 
         const feltetBtn = document.getElementById('feltetBtn');
-
-        function startFeltet(e) {
-            e.preventDefault();
-            feltetBtn.style.background = "var(--warning)";
-            feltetBtn.innerText = "MÉRÉS...";
-            feltetStartTime = Date.now();
-        }
-
+        function startFeltet(e) { e.preventDefault(); feltetBtn.innerText = "MÉRÉS..."; feltetStartTime = Date.now(); }
         function endFeltet(e) {
-            e.preventDefault();
-            feltetBtn.style.background = "var(--accent-gradient)";
-            feltetBtn.innerText = "CSERE";
+            e.preventDefault(); feltetBtn.innerText = "CSERE";
             if (feltetStartTime > 0) {
                 const duration = ((Date.now() - feltetStartTime) / 1000).toFixed(1);
                 currentRunFeltetTimes.push(parseFloat(duration));
-                
-                const li = document.createElement('li');
-                li.innerText = `${duration} mp`;
+                const li = document.createElement('li'); li.innerText = `${duration} mp`;
                 document.getElementById('feltetList').appendChild(li);
-                
                 feltetStartTime = 0;
             }
         }
+        feltetBtn.addEventListener('mousedown', startFeltet); feltetBtn.addEventListener('mouseup', endFeltet);
+        feltetBtn.addEventListener('touchstart', startFeltet); feltetBtn.addEventListener('touchend', endFeltet);
 
-        feltetBtn.addEventListener('mousedown', startFeltet);
-        feltetBtn.addEventListener('mouseup', endFeltet);
-        feltetBtn.addEventListener('mouseleave', () => { if(feltetStartTime > 0) endFeltet(new Event('mouseleave')); });
-        feltetBtn.addEventListener('touchstart', startFeltet);
-        feltetBtn.addEventListener('touchend', endFeltet);
-
+        // PONTOZÓLAP ADATOK
         const scoringData = [
-            {
-                title: "Felszerelés ellenőrzés",
-                items: [
-                    { type: 'checkbox', name: 'A felszerelés befér a kis indítási területre 20 pt', points: 20 }
-                ]
-            },
-            {
-                title: "Pontosságjelölők",
-                items: [
-                    { 
-                        type: 'select', 
-                        name: 'Megmaradt pontosságjelölők', 
-                        options: [
-                            { text: '0 db (0 pt)', pts: 0 },
-                            { text: '1 db (10 pt)', pts: 10 },
-                            { text: '2 db (15 pt)', pts: 15 },
-                            { text: '3 db (25 pt)', pts: 25 },
-                            { text: '4 db (35 pt)', pts: 35 },
-                            { text: '5 db (50 pt)', pts: 50 },
-                            { text: '6 db (50 pt)', pts: 50 }
-                        ] 
-                    }
-                ]
-            },
-            {
-                title: "1. Drónfelmérés",
-                items: [
-                    { type: 'checkbox', name: 'A drón nem érinti a pályaalapot 20 pt', points: 20 },
-                    { type: 'checkbox', name: 'Bónusz: LIDAR térkép teljesen fel van fordítva ÉS scan jelölő a területen 10 pt', points: 10 }
-                ]
-            },
-            {
-                title: "2. Magszórás",
-                items: [
-                    { 
-                        type: 'select', 
-                        name: 'Magok nem érintik a szárat', 
-                        options: [
-                            { text: '0 mag (0 pt)', pts: 0 },
-                            { text: '1 mag (10 pt)', pts: 10 },
-                            { text: '2 mag (20 pt)', pts: 20 },
-                            { text: '3 mag (30 pt)', pts: 30 }
-                        ] 
-                    }
-                ]
-            },
-            {
-                title: "3. Kőfelfordítás",
-                items: [
-                    { type: 'checkbox', name: 'A kutatási zászló lent van 20 pt', points: 20 },
-                    { type: 'checkbox', name: 'Bónusz: Kő visszafordítva az eredeti helyzetébe 10 pt', points: 10 }
-                ]
-            },
-            {
-                title: "4. Szerencsés levelek",
-                items: [
-                    { type: 'checkbox', name: '1 levél teljesen eltávolítva, nem érinti a fészket 10 pt', points: 10 },
-                    { type: 'checkbox', name: 'Bónusz: 2. levél is eltávolítva ÉS szöcske a kezdőpozícióban 20 pt', points: 20 }
-                ]
-            },
-            {
-                title: "5. Növekedő gyökerek",
-                items: [
-                    { 
-                        type: 'select', 
-                        name: 'Gyökér kiterjesztése', 
-                        options: [
-                            { text: 'Nincs kiterjesztve (0 pt)', pts: 0 },
-                            { text: 'a. Részben ki lett terjesztve (10 pt)', pts: 10 },
-                            { text: 'b. Teljesen ki lett terjesztve (20 pt)', pts: 20 }
-                        ] 
-                    }
-                ]
-            },
-            {
-                title: "6. Levélvágó őrület",
-                items: [
-                    { 
-                        type: 'select', 
-                        name: 'A hangya érinti a fészket és levélrészek a fészken belül', 
-                        options: [
-                            { text: '0 levél (0 pt)', pts: 0 },
-                            { text: '1 levél (10 pt)', pts: 10 },
-                            { text: '2 levél (20 pt)', pts: 20 },
-                            { text: '3 levél (30 pt)', pts: 30 },
-                            { text: '4 levél (40 pt)', pts: 40 }
-                        ] 
-                    }
-                ]
-            },
-            {
-                title: "7. Hatalmas gomba",
-                items: [
-                    { type: 'checkbox', name: 'Micélium teljesen ki lett terjesztve 20 pt', points: 20 },
-                    { 
-                        type: 'select', 
-                        name: 'Bónusz: Kapcsolat a gyökér és micélium között', 
-                        options: [
-                            { text: 'Nincs kapcsolat (0 pt)', pts: 0 },
-                            { text: '1 kapcsolat (10 pt)', pts: 10 },
-                            { text: '2 kapcsolat (20 pt)', pts: 20 }
-                        ] 
-                    }
-                ]
-            },
-            {
-                title: "8. Kusza inda",
-                items: [
-                    { type: 'checkbox', name: 'Az inda érinti a pályaalapot 30 pt', points: 30 }
-                ]
-            },
-            {
-                title: "9. Kutatási platform",
-                items: [
-                    { type: 'checkbox', name: 'Kutatási platform fel lett emelve 10 pt', points: 10 },
-                    { type: 'checkbox', name: 'Kameracsapda telepítve lett 10 pt', points: 10 },
-                    { type: 'checkbox', name: 'A mag nem érinti a fát 10 pt', points: 10 }
-                ]
-            },
-            {
-                title: "10. Törékeny mikroélőhelyek",
-                items: [
-                    { type: 'checkbox', name: 'Pók élőhelye a kiindulási helyzetben 10 pt', points: 10 },
-                    { type: 'checkbox', name: 'Csiga élőhelye a kiindulási helyzetben 10 pt', points: 10 }
-                ]
-            },
-            {
-                title: "11. Ablak a múltra",
-                items: [
-                    { type: 'checkbox', name: 'Gyökértakaró lent van, érinti a pályaalapot 20 pt', points: 20 }
-                ]
-            },
-            {
-                title: "12. Erdei öreg",
-                items: [
-                    { type: 'checkbox', name: 'Pálca teljesen felemelve, érinti a fát 20 pt', points: 20 },
-                    { type: 'checkbox', name: 'Támasztógyűrű a támasz körül van 10 pt', points: 10 }
-                ]
-            },
-            {
-                title: "13. Kulcsfontosságú fajok",
-                items: [
-                    { type: 'checkbox', name: 'Kulcsfontosságú fajmodell a platformon ÉS fiatal fák felemelkedtek 30 pt', points: 30 }
-                ]
-            },
-            {
-                title: "14. Megújulás magvai",
-                items: [
-                    { 
-                        type: 'select', 
-                        name: 'Magok az újraültető állomáson', 
-                        options: [
-                            { text: '0 mag (0 pt)', pts: 0 },
-                            { text: '1 mag (5 pt)', pts: 5 },
-                            { text: '2 mag (10 pt)', pts: 10 },
-                            { text: '3 mag (15 pt)', pts: 15 },
-                            { text: '4 mag (20 pt)', pts: 20 }
-                        ] 
-                    },
-                    { 
-                        type: 'select', 
-                        name: 'Bónusz: Magok érintik a pályaalapot', 
-                        options: [
-                            { text: '0 mag (0 pt)', pts: 0 },
-                            { text: '1 mag (5 pt)', pts: 5 },
-                            { text: '2 mag (10 pt)', pts: 10 },
-                            { text: '3 mag (15 pt)', pts: 15 },
-                            { text: '4 mag (20 pt)', pts: 20 }
-                        ] 
-                    }
-                ]
-            },
-            {
-                title: "15. Biobarát építészet & Környezeti bónusz",
-                items: [
-                    { type: 'checkbox', name: 'Lombkorona fészek fel lett emelve 10 pt', points: 10 },
-                    { type: 'checkbox', name: 'Tetőablak teljesen be lett tolva 10 pt', points: 10 },
-                    { type: 'checkbox', name: 'Komposztnyílás teljesen nyitva, érinti a pályaalapot 10 pt', points: 10 },
-                    { 
-                        type: 'select', 
-                        name: 'Környezeti bónusz (Legfontosabb ökológiai igény) 10 pt', 
-                        options: [
-                            { text: 'Nincs bónusz (0 pt)', pts: 0 },
-                            { text: 'a. Bányadokkoló: Lombkorona fészek (10 pt)', pts: 10 },
-                            { text: 'b. Városi dokkoló: Tetőablak (10 pt)', pts: 10 },
-                            { text: 'c. Farm dokkoló: Komposztnyílás (10 pt)', pts: 10 }
-                        ] 
-                    }
-                ]
-            }
+            { title: "Felszerelés ellenőrzés", items: [{ type: 'checkbox', name: 'A felszerelés befér a kis indítási területre 20 pt', points: 20 }] },
+            { title: "Pontosságjelölők", items: [{ type: 'select', name: 'Megmaradt pontosságjelölők', options: [{ text: '0 db (0 pt)', pts: 0 }, { text: '1 db (10 pt)', pts: 10 }, { text: '2 db (15 pt)', pts: 15 }, { text: '3 db (25 pt)', pts: 25 }, { text: '4 db (35 pt)', pts: 35 }, { text: '5 db (50 pt)', pts: 50 }] }] },
+            { title: "1. Drónfelmérés", items: [{ type: 'checkbox', name: 'A drón nem érinti a pályaalapot 20 pt', points: 20 }, { type: 'checkbox', name: 'Bónusz: LIDAR térkép fel van fordítva 10 pt', points: 10 }] }
         ];
 
         function getGroupMaxPoints(group) {
             let max = 0;
             group.items.forEach(item => {
-                if (item.type === 'checkbox') {
-                    max += item.points;
-                } else if (item.type === 'select') {
-                    let maxOpt = 0;
-                    item.options.forEach(opt => {
-                        if (opt.pts > maxOpt) maxOpt = opt.pts;
-                    });
-                    max += maxOpt;
-                }
+                if (item.type === 'checkbox') max += item.points;
+                else if (item.type === 'select') max += Math.max(...item.options.map(o => o.pts));
             });
             return max;
         }
 
-        let currentScore = 0;
-        let statistics = [];
+        let currentScore = 0; window.statistics = [];
 
         function renderMissions() {
-            const container = document.getElementById('missionsContainer');
-            container.innerHTML = "";
-            
+            const container = document.getElementById('missionsContainer'); container.innerHTML = "";
             scoringData.forEach((group, gIdx) => {
-                const groupDiv = document.createElement('div');
-                groupDiv.className = 'mission-group';
-                
+                const groupDiv = document.createElement('div'); groupDiv.className = 'mission-group';
                 let groupHtml = `<div class="mission-title">${group.title}</div>`;
-                
                 group.items.forEach((item, iIdx) => {
                     const itemId = `m_${gIdx}_${iIdx}`;
-                    groupHtml += `<div class="mission-item">`;
-                    groupHtml += `<label for="${itemId}">${item.name}</label>`;
-                    
-                    if (item.type === 'checkbox') {
-                        groupHtml += `<input type="checkbox" id="${itemId}" data-pts="${item.points}" onchange="calculateScore()">`;
-                    } else if (item.type === 'select') {
+                    groupHtml += `<div class="mission-item"><label for="${itemId}">${item.name}</label>`;
+                    if (item.type === 'checkbox') groupHtml += `<input type="checkbox" id="${itemId}" data-pts="${item.points}" onchange="calculateScore()">`;
+                    else if (item.type === 'select') {
                         groupHtml += `<select id="${itemId}" onchange="calculateScore()">`;
-                        item.options.forEach(opt => {
-                            groupHtml += `<option value="${opt.pts}">${opt.text}</option>`;
-                        });
+                        item.options.forEach(opt => groupHtml += `<option value="${opt.pts}">${opt.text}</option>`);
                         groupHtml += `</select>`;
                     }
-                    
                     groupHtml += `</div>`;
                 });
-                
-                groupDiv.innerHTML = groupHtml;
-                container.appendChild(groupDiv);
+                groupDiv.innerHTML = groupHtml; container.appendChild(groupDiv);
             });
         }
 
         function calculateScore() {
             currentScore = 0;
-            
             scoringData.forEach((group, gIdx) => {
                 group.items.forEach((item, iIdx) => {
                     const el = document.getElementById(`m_${gIdx}_${iIdx}`);
                     if (!el) return;
-                    
-                    if (item.type === 'checkbox' && el.checked) {
-                        currentScore += parseInt(el.getAttribute('data-pts') || 0);
-                    } else if (item.type === 'select') {
-                        currentScore += parseInt(el.value || 0);
-                    }
+                    if (item.type === 'checkbox' && el.checked) currentScore += parseInt(el.getAttribute('data-pts') || 0);
+                    else if (item.type === 'select') currentScore += parseInt(el.value || 0);
                 });
             });
-
             document.getElementById('totalScoreDisplay').innerText = `${currentScore} pont`;
         }
 
-        function openScoringModal() {
-            pauseTimer();
-            renderMissions();
-            calculateScore();
-            document.getElementById('scoringModal').style.display = 'flex';
-        }
-
-        function closeScoringModal() {
-            document.getElementById('scoringModal').style.display = 'none';
-        }
+        function openScoringModal() { pauseTimer(); renderMissions(); calculateScore(); document.getElementById('scoringModal').style.display = 'flex'; }
+        function closeScoringModal() { document.getElementById('scoringModal').style.display = 'none'; }
 
         function saveRunAndShowStats() {
             const missionScores = scoringData.map((group, gIdx) => {
@@ -1216,264 +528,76 @@
                 group.items.forEach((item, iIdx) => {
                     const el = document.getElementById(`m_${gIdx}_${iIdx}`);
                     if (!el) return;
-                    if (item.type === 'checkbox' && el.checked) {
-                        earned += parseInt(el.getAttribute('data-pts') || 0);
-                    } else if (item.type === 'select') {
-                        earned += parseInt(el.value || 0);
-                    }
+                    if (item.type === 'checkbox' && el.checked) earned += parseInt(el.getAttribute('data-pts') || 0);
+                    else if (item.type === 'select') earned += parseInt(el.value || 0);
                 });
-                return {
-                    title: group.title,
-                    earned: earned,
-                    max: getGroupMaxPoints(group)
-                };
+                return { title: group.title, earned, max: getGroupMaxPoints(group) };
             });
 
             const actualTimeSeconds = 150 - timeLeft;
-
-            let timeInfoText = "";
-            if (timeLeft >= 0) {
-                const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-                const s = (timeLeft % 60).toString().padStart(2, '0');
-                timeInfoText = `Hátralévő idő: ${m}:${s}`;
-            } else {
-                const overSec = Math.abs(timeLeft);
-                const m = Math.floor(overSec / 60).toString().padStart(2, '0');
-                const s = (overSec % 60).toString().padStart(2, '0');
-                timeInfoText = `A 2,5 perc lejárt! Túllógás: +${m}:${s}`;
-            }
-
-            const totalFeltetTime = currentRunFeltetTimes.reduce((a, b) => a + b, 0).toFixed(1);
-            const ptsPerSec = actualTimeSeconds > 0 ? (currentScore / actualTimeSeconds).toFixed(2) : "0.00";
+            let timeInfoText = timeLeft >= 0 
+                ? `Hátralévő idő: ${Math.floor(timeLeft/60).toString().padStart(2,'0')}:${(timeLeft%60).toString().padStart(2,'0')}` 
+                : `A 2,5 perc lejárt! Túllógás: +${Math.floor(Math.abs(timeLeft)/60).toString().padStart(2,'0')}:${(Math.abs(timeLeft)%60).toString().padStart(2,'0')}`;
 
             const runData = {
-                id: statistics.length + 1,
+                id: window.statistics.length + 1,
                 score: currentScore,
                 timeText: timeInfoText,
                 actualSeconds: actualTimeSeconds,
-                ptsPerSec: ptsPerSec,
+                ptsPerSec: actualTimeSeconds > 0 ? (currentScore / actualTimeSeconds).toFixed(2) : "0.00",
                 isOvertime: timeLeft < 0,
                 feltetTimes: [...currentRunFeltetTimes],
-                totalFeltet: totalFeltetTime,
+                totalFeltet: currentRunFeltetTimes.reduce((a, b) => a + b, 0).toFixed(1),
                 missions: missionScores
             };
 
-            statistics.push(runData);
+            if (window.saveRunToCloud) window.saveRunToCloud(runData);
             closeScoringModal();
-            updateStatsView();
             resetTimer();
             showPage('statsPage', document.querySelectorAll('nav button')[2]);
         }
 
-        function deleteRun(index) {
-            if (confirm(`Biztosan törölni szeretnéd ezt a menetet (#${statistics[index].id})?`)) {
-                statistics.splice(index, 1);
-                updateStatsView();
+        window.deleteRun = function(dbKey) {
+            if (confirm("Biztosan törölni szeretnéd ezt a menetet a felhőből?")) {
+                if (window.deleteRunFromCloud) window.deleteRunFromCloud(dbKey);
             }
-        }
+        };
 
-        function updateStatsView() {
-            updateRunsList();
-            updateTasksStats();
-            updateFeltetStats();
-        }
-
-        function updateRunsList() {
+        window.updateStatsView = function() {
             const container = document.getElementById('statsListContainer');
-            
-            if (statistics.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs mentett menet. Indíts egy mérést a "Stopper és Futás" oldalon!</p>';
+            if (!window.statistics || window.statistics.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs mentett menet az adatbázisban.</p>';
                 return;
             }
 
             container.innerHTML = "";
-            
-            statistics.slice().reverse().forEach((run, reverseIdx) => {
-                const originalIndex = statistics.length - 1 - reverseIdx;
-                
+            window.statistics.slice().reverse().forEach((run, reverseIdx) => {
                 const card = document.createElement('div');
                 card.className = 'run-card';
-                
-                let missionsHtml = run.missions.map(m => {
-                    const isMax = (m.earned === m.max && m.max > 0);
-                    const isHasPoints = m.earned > 0;
-                    
-                    let cssClasses = 'run-mission-item';
-                    if (isMax) {
-                        cssClasses += ' max-points';
-                    } else if (isHasPoints) {
-                        cssClasses += ' has-points';
-                    }
-
-                    return `
-                        <div class="${cssClasses}">
-                            <span>${m.title}</span>
-                            <strong>${m.earned}/${m.max}</strong>
-                        </div>
-                    `;
-                }).join('');
-
-                let feltetDetails = run.feltetTimes.length > 0 
-                    ? ` (részletek: ${run.feltetTimes.map(t => t + 's').join(', ')})` 
-                    : '';
+                let missionsHtml = run.missions.map(m => `
+                    <div class="run-mission-item ${m.earned === m.max && m.max > 0 ? 'max-points' : (m.earned > 0 ? 'has-points' : '')}">
+                        <span>${m.title}</span><strong>${m.earned}/${m.max}</strong>
+                    </div>
+                `).join('');
 
                 card.innerHTML = `
                     <div class="run-card-header">
-                        <h2>${run.id}. menet</h2>
-                        <div class="run-score-badge">Összpontszám: ${run.score} pont</div>
+                        <h2>${run.id || (reverseIdx + 1)}. menet</h2>
+                        <div class="run-score-badge">${run.score} pont</div>
                     </div>
-                    
-                    <div class="run-time-info" style="${run.isOvertime ? 'color: var(--accent); border-color: rgba(255, 0, 85, 0.4);' : 'color: var(--primary);'}">
+                    <div class="run-time-info">
                         <span><strong>${run.timeText}</strong></span>
-                        <span style="font-size: 16px; color: var(--success); font-weight: 700;">${run.ptsPerSec} pont / másodperc</span>
+                        <span style="color: var(--success); font-weight: 700;">${run.ptsPerSec} pont / mp</span>
                     </div>
-                    
-                    <h3 style="font-size: 16px; margin: 18px 0 12px 0;">Feladatok és ellenőrzések eredményei:</h3>
-                    <div class="run-missions-list">
-                        ${missionsHtml}
-                    </div>
-                    
-                    <div class="run-footer">
-                        <div style="font-size: 14px; color: var(--text-muted);">
-                            <strong style="color: var(--text-main);">Feltétcserék össz ideje:</strong> ${run.totalFeltet} mp${feltetDetails}
-                        </div>
-                        <button class="btn btn-danger" onclick="deleteRun(${originalIndex})">Menet törlése</button>
+                    <div class="run-missions-list">${missionsHtml}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 14px; color: var(--text-muted);">Feltétcserék: ${run.totalFeltet} mp</span>
+                        <button class="btn btn-danger" onclick="deleteRun('${run.dbKey}')">Törlés</button>
                     </div>
                 `;
-                
                 container.appendChild(card);
             });
-        }
-
-        function updateTasksStats() {
-            const container = document.getElementById('tasksStatsContainer');
-            if (statistics.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs elegendő adat a feladatsztatisztikához.</p>';
-                return;
-            }
-
-            const totalRuns = statistics.length;
-            const taskStats = scoringData.map((group, gIdx) => {
-                let solvedCount = 0;
-                let totalEarnedPoints = 0;
-                let maxPoints = getGroupMaxPoints(group);
-
-                statistics.forEach(run => {
-                    const runMission = run.missions[gIdx];
-                    if (runMission && runMission.earned > 0) {
-                        solvedCount++;
-                    }
-                    if (runMission) {
-                        totalEarnedPoints += runMission.earned;
-                    }
-                });
-
-                const totalPossiblePoints = maxPoints * totalRuns;
-                const solvePercentage = totalPossiblePoints > 0 
-                    ? Math.round((totalEarnedPoints / totalPossiblePoints) * 100) 
-                    : 0;
-
-                const avgPoints = (totalEarnedPoints / totalRuns).toFixed(1);
-
-                return {
-                    title: group.title,
-                    percentage: solvePercentage,
-                    solvedCount: solvedCount,
-                    avgPoints: avgPoints,
-                    maxPoints: maxPoints
-                };
-            });
-
-            let html = `<p style="margin-bottom: 24px; color: var(--text-muted);">Összes mentett menet alapján (${totalRuns} menet pontaránya):</p>`;
-            html += `<div class="stats-grid">`;
-
-            taskStats.forEach(stat => {
-                let statusColor = 'var(--accent)';
-                if (stat.percentage >= 70) {
-                    statusColor = 'var(--success)';
-                } else if (stat.percentage >= 50) {
-                    statusColor = 'var(--warning)';
-                }
-
-                html += `
-                    <div class="stat-card" style="border-left-color: ${statusColor};">
-                        <h4>${stat.title}</h4>
-                        <div style="font-size: 26px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: ${statusColor};">
-                            ${stat.percentage}% sikeresség
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill" style="width: ${stat.percentage}%; background: ${statusColor};"></div>
-                        </div>
-                        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-                            Átlagos pont: ${stat.avgPoints} / ${stat.maxPoints} pt
-                        </div>
-                    </div>
-                `;
-            });
-
-            html += `</div>`;
-            container.innerHTML = html;
-        }
-
-        function updateFeltetStats() {
-            const container = document.getElementById('feltetStatsContainer');
-            if (statistics.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs rögzített feltétcsere adat.</p>';
-                return;
-            }
-
-            const feltetByPosition = {};
-            let allFeltetTimes = [];
-
-            statistics.forEach(run => {
-                run.feltetTimes.forEach((time, idx) => {
-                    const pos = idx + 1;
-                    if (!feltetByPosition[pos]) {
-                        feltetByPosition[pos] = [];
-                    }
-                    feltetByPosition[pos].push(time);
-                    allFeltetTimes.push(time);
-                });
-            });
-
-            if (allFeltetTimes.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">Egyetlen menetben sem történt feltétcsere mérés.</p>';
-                return;
-            }
-
-            const grandTotalSum = allFeltetTimes.reduce((a, b) => a + b, 0);
-            const grandAvg = (grandTotalSum / allFeltetTimes.length).toFixed(1);
-
-            let html = `
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 28px;">
-                    <div style="background: var(--card-bg); padding: 20px 28px; border-radius: var(--radius-md); border-left: 5px solid var(--primary); border: 1px solid var(--panel-border);">
-                        <div style="font-size: 13px; color: var(--text-muted);">Összes csere átlagideje</div>
-                        <div style="font-size: 32px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--primary);">${grandAvg} mp</div>
-                    </div>
-                </div>
-
-                <h3 style="margin-bottom: 18px;">Cserék átlagos ideje</h3>
-                <div class="stats-grid">
-            `;
-
-            Object.keys(feltetByPosition).forEach(pos => {
-                const times = feltetByPosition[pos];
-                const avg = (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1);
-
-                html += `
-                    <div class="stat-card">
-                        <h4>${pos}. Feltétcsere</h4>
-                        <div style="font-size: 28px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--primary);">${avg} mp</div>
-                        <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
-                            Mért értékek: ${times.map(t => t + 's').join(', ')}
-                        </div>
-                    </div>
-                `;
-            });
-
-            html += `</div>`;
-            container.innerHTML = html;
-        }
+        };
     </script>
 </body>
 </html>
