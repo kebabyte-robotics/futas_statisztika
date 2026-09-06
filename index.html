@@ -191,7 +191,7 @@
     <div id="plannerPage" class="page active">
         <h1>Útvonaltervező és Kódgeneráló</h1>
         <div class="room-banner">
-            <span>Kebabyte:Munkamenet szoba (Room ID): <strong id="roomDisplay">fll-default-room</strong></span>
+            <span>Kebabyte:Munkafutás szoba (Room ID): <strong id="roomDisplay">fll-default-room</strong></span>
             <button class="btn" style="padding: 6px 12px; font-size: 12px;" onclick="copyRoomLink()">Link másolása a csapattársaknak</button>
         </div>
         <div class="planner-container">
@@ -245,7 +245,7 @@
             <div id="missionsContainer"></div>
             <div style="margin-top: 28px; text-align: right; display: flex; justify-content: flex-end; gap: 14px;">
                 <button class="btn btn-danger" onclick="closeScoringModal()">Mégse</button>
-                <button class="btn btn-success" onclick="saveRunAndShowStats()">Menet Mentése Cloudba</button>
+                <button class="btn btn-success" onclick="saveRunAndShowStats()">futás Mentése Cloudba</button>
             </div>
         </div>
     </div>
@@ -372,7 +372,7 @@
 
             isRunActive = true;
             let runNum = paths.length + 1;
-            codeInput.value += (codeInput.value.trim() ? "\n" : "") + `--- ${runNum}. MENET ---\n// Kezdőpont: X=${startX_mm}mm, Y=${startY_mm}mm\n`;
+            codeInput.value += (codeInput.value.trim() ? "\n" : "") + `--- ${runNum}. futás ---\n// Kezdőpont: X=${startX_mm}mm, Y=${startY_mm}mm\n`;
 
             paths.push({ points: [{x: x_px, y: y_px}], color: COLOR_PALETTE[paths.length % COLOR_PALETTE.length] });
             currentPathIndex = paths.length - 1;
@@ -740,7 +740,7 @@
         }
 
         window.deleteRun = function(dbKey) {
-            if (confirm("Biztosan törölni szeretnéd ezt a menetet a felhőből?")) {
+            if (confirm("Biztosan törölni szeretnéd ezt a futáset a felhőből?")) {
                 if (window.deleteRunFromCloud) window.deleteRunFromCloud(dbKey);
             }
         };
@@ -754,7 +754,7 @@
         function updateRunsList() {
             const container = document.getElementById('statsListContainer');
             if (!window.statistics || window.statistics.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs mentett menet az adatbázisban.</p>';
+                container.innerHTML = '<p style="color: var(--text-muted);">Még nincs mentett futás az adatbázisban.</p>';
                 return;
             }
 
@@ -770,7 +770,7 @@
 
                 card.innerHTML = `
                     <div class="run-card-header">
-                        <h2>${run.id || (reverseIdx + 1)}. menet</h2>
+                        <h2>${run.id || (reverseIdx + 1)}. futás</h2>
                         <div class="run-score-badge">${run.score} pont</div>
                     </div>
                     <div class="run-time-info">
@@ -811,7 +811,7 @@
                 return { title: group.title, percentage: solvePercentage, avgPoints, maxPoints };
             });
 
-            let html = `<p style="margin-bottom: 24px; color: var(--text-muted);">Összes mentett menet alapján (${totalRuns} menet pontaránya):</p><div class="stats-grid">`;
+            let html = `<p style="margin-bottom: 24px; color: var(--text-muted);">Összes mentett futás alapján (${totalRuns} futás pontaránya):</p><div class="stats-grid">`;
             taskStats.forEach(stat => {
                 let statusColor = stat.percentage >= 70 ? 'var(--success)' : (stat.percentage >= 50 ? 'var(--warning)' : 'var(--accent)');
                 html += `
@@ -849,7 +849,7 @@
             });
 
             if (allFeltetTimes.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">Egyetlen menetben sem történt feltétcsere mérés.</p>';
+                container.innerHTML = '<p style="color: var(--text-muted);">Egyetlen futásben sem történt feltétcsere mérés.</p>';
                 return;
             }
 
