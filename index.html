@@ -740,7 +740,7 @@
         }
 
         window.deleteRun = function(dbKey) {
-            if (confirm("Biztosan törölni szeretnéd ezt a futáset a felhőből?")) {
+            if (confirm("Biztosan törölni szeretnéd ezt a futást a felhőből?")) {
                 if (window.deleteRunFromCloud) window.deleteRunFromCloud(dbKey);
             }
         };
@@ -849,7 +849,7 @@
             });
 
             if (allFeltetTimes.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">Egyetlen futásben sem történt feltétcsere mérés.</p>';
+                container.innerHTML = '<p style="color: var(--text-muted);">Egyetlen futásban sem történt feltétcsere mérés.</p>';
                 return;
             }
 
